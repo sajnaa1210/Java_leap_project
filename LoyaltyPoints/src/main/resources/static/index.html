@@ -1,0 +1,790 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>LoyaltyPoints | Retail Rewards Engine</title>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap"
+          rel="stylesheet">
+
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+<div class="app-shell">
+
+    <!-- ================= SIDEBAR ================= -->
+
+    <aside class="sidebar">
+
+        <div class="brand">
+            <div class="brand-logo">L</div>
+
+            <div>
+                <h2>LoyaltyPoints</h2>
+                <span>Rewards Engine</span>
+            </div>
+        </div>
+
+        <nav class="nav">
+
+            <button class="nav-item active" onclick="showSection('dashboard', this)">
+                <span>⌂</span>
+                Dashboard
+            </button>
+
+            <button class="nav-item" onclick="showSection('customers', this)">
+                <span>♙</span>
+                Customers
+            </button>
+
+            <button class="nav-item" onclick="showSection('earn', this)">
+                <span>✦</span>
+                Earn Points
+            </button>
+
+            <button class="nav-item" onclick="showSection('redeem', this)">
+                <span>◇</span>
+                Redeem
+            </button>
+
+            <button class="nav-item" onclick="showSection('adjust', this)">
+                <span>±</span>
+                Adjust Points
+            </button>
+
+            <button class="nav-item" onclick="showSection('transactions', this)">
+                <span>↕</span>
+                Transactions
+            </button>
+
+        </nav>
+
+        <div class="sidebar-bottom">
+
+            <div class="system-card">
+                <div class="status-row">
+                    <span class="status-dot"></span>
+                    System Online
+                </div>
+
+                <p>Spring Boot + MySQL</p>
+            </div>
+
+            <p class="sidebar-footer">
+                Retail Loyalty Platform
+            </p>
+
+        </div>
+
+    </aside>
+
+
+    <!-- ================= MAIN ================= -->
+
+    <main class="main">
+
+        <!-- HEADER -->
+
+        <header class="topbar">
+
+            <div>
+                <p class="eyebrow">RETAIL LOYALTY MANAGEMENT</p>
+                <h1 id="pageTitle">Dashboard</h1>
+            </div>
+
+            <div class="top-actions">
+
+                <button class="refresh-button" onclick="loadAllData()">
+                    ↻ Refresh
+                </button>
+
+                <div class="admin">
+                    <div class="admin-avatar">A</div>
+
+                    <div>
+                        <strong>Administrator</strong>
+                        <span>System Manager</span>
+                    </div>
+                </div>
+
+            </div>
+
+        </header>
+
+
+        <!-- ================= DASHBOARD ================= -->
+
+        <section id="dashboard" class="page-section active-section">
+
+            <div class="welcome-card">
+
+                <div>
+                    <p class="eyebrow light">LOYALTYPOINTS PLATFORM</p>
+
+                    <h2>Turn every purchase into<br>a lasting relationship.</h2>
+
+                    <p>
+                        Manage customers, reward purchases, automate membership
+                        tiers and track every loyalty transaction from one dashboard.
+                    </p>
+
+                    <button class="hero-button"
+                            onclick="openSection('customers')">
+                        Add New Customer →
+                    </button>
+                </div>
+
+                <div class="hero-visual">
+
+                    <div class="membership-card">
+
+                        <div class="card-top">
+                            <span>LOYALTY</span>
+                            <span>✦</span>
+                        </div>
+
+                        <div class="chip"></div>
+
+                        <div class="member-info">
+                            <small>MEMBERSHIP</small>
+                            <strong>PREMIUM REWARDS</strong>
+                        </div>
+
+                        <div class="card-bottom">
+                            <span>BRONZE</span>
+                            <span>→ PLATINUM</span>
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            <!-- STATS -->
+
+            <div class="stats-grid">
+
+                <div class="stat-card">
+                    <div class="stat-icon purple">♙</div>
+
+                    <div>
+                        <p>Total Customers</p>
+                        <h3 id="totalCustomers">0</h3>
+                        <span>Registered members</span>
+                    </div>
+                </div>
+
+
+                <div class="stat-card">
+                    <div class="stat-icon blue">✦</div>
+
+                    <div>
+                        <p>Points Balance</p>
+                        <h3 id="totalPoints">0</h3>
+                        <span>Across all customers</span>
+                    </div>
+                </div>
+
+
+                <div class="stat-card">
+                    <div class="stat-icon gold">★</div>
+
+                    <div>
+                        <p>Premium Members</p>
+                        <h3 id="premiumMembers">0</h3>
+                        <span>Gold & Platinum</span>
+                    </div>
+                </div>
+
+
+                <div class="stat-card">
+                    <div class="stat-icon green">↗</div>
+
+                    <div>
+                        <p>Transactions</p>
+                        <h3 id="transactionCount">0</h3>
+                        <span>Recorded activity</span>
+                    </div>
+                </div>
+
+            </div>
+
+
+            <!-- DASHBOARD LOWER -->
+
+            <div class="dashboard-grid">
+
+                <div class="panel">
+
+                    <div class="panel-heading">
+                        <div>
+                            <p class="eyebrow">MEMBERS</p>
+                            <h3>Recent Customers</h3>
+                        </div>
+
+                        <button class="text-button"
+                                onclick="openSection('customers')">
+                            View all →
+                        </button>
+                    </div>
+
+                    <div id="recentCustomers" class="recent-list">
+
+                        <div class="empty-state">
+                            <div>♙</div>
+                            <h4>No customers yet</h4>
+                            <p>Register your first loyalty member.</p>
+                        </div>
+
+                    </div>
+
+                </div>
+
+
+                <div class="panel tier-panel">
+
+                    <div class="panel-heading">
+                        <div>
+                            <p class="eyebrow">PROGRAM</p>
+                            <h3>Membership Tiers</h3>
+                        </div>
+                    </div>
+
+                    <div class="tier-list">
+
+                        <div class="tier-row">
+                            <div class="tier-badge bronze">B</div>
+                            <div>
+                                <strong>Bronze</strong>
+                                <span>Entry membership</span>
+                            </div>
+                            <b>1×</b>
+                        </div>
+
+                        <div class="tier-row">
+                            <div class="tier-badge silver">S</div>
+                            <div>
+                                <strong>Silver</strong>
+                                <span>Growing member</span>
+                            </div>
+                            <b>1.25×</b>
+                        </div>
+
+                        <div class="tier-row">
+                            <div class="tier-badge gold-tier">G</div>
+                            <div>
+                                <strong>Gold</strong>
+                                <span>Premium member</span>
+                            </div>
+                            <b>1.5×</b>
+                        </div>
+
+                        <div class="tier-row">
+                            <div class="tier-badge platinum">P</div>
+                            <div>
+                                <strong>Platinum</strong>
+                                <span>Elite member</span>
+                            </div>
+                            <b>2×</b>
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </section>
+
+
+        <!-- ================= CUSTOMERS ================= -->
+
+        <section id="customers" class="page-section">
+
+            <div class="section-header">
+
+                <div>
+                    <p class="eyebrow">CUSTOMER MANAGEMENT</p>
+                    <h2>Customers</h2>
+                    <p>Register and manage loyalty program members.</p>
+                </div>
+
+                <button class="primary-button"
+                        onclick="toggleCustomerForm()">
+                    + Add Customer
+                </button>
+
+            </div>
+
+
+            <div id="customerFormCard" class="form-card hidden">
+
+                <div class="form-heading">
+                    <div>
+                        <p class="eyebrow">NEW MEMBER</p>
+                        <h3>Register Customer</h3>
+                    </div>
+
+                    <button class="close-button"
+                            onclick="toggleCustomerForm()">×</button>
+                </div>
+
+                <form id="customerForm">
+
+                    <input type="hidden" id="editCustomerId">
+
+                    <div class="form-grid">
+
+                        <div class="field">
+                            <label>Full Name</label>
+                            <input id="customerName"
+                                   type="text"
+                                   placeholder="Enter customer name"
+                                   required>
+                        </div>
+
+                        <div class="field">
+                            <label>Email Address</label>
+                            <input id="customerEmail"
+                                   type="email"
+                                   placeholder="name@example.com"
+                                   required>
+                        </div>
+
+                        <div class="field">
+                            <label>Phone Number</label>
+                            <input id="customerPhone"
+                                   type="text"
+                                   placeholder="9876543210">
+                        </div>
+
+                    </div>
+
+                    <div class="form-actions">
+
+                        <button type="button"
+                                class="secondary-button"
+                                onclick="toggleCustomerForm()">
+                            Cancel
+                        </button>
+
+                        <button type="submit"
+                                class="primary-button">
+                            Save Customer
+                        </button>
+
+                    </div>
+
+                </form>
+
+            </div>
+
+
+            <div class="panel">
+
+                <div class="table-toolbar">
+
+                    <div class="search-box">
+                        <span>⌕</span>
+
+                        <input id="customerSearch"
+                               type="text"
+                               placeholder="Search customers..."
+                               oninput="renderCustomers()">
+                    </div>
+
+                    <span id="customerCountLabel"
+                          class="count-label">
+                        0 customers
+                    </span>
+
+                </div>
+
+
+                <div class="table-wrapper">
+
+                    <table>
+
+                        <thead>
+                        <tr>
+                            <th>Customer</th>
+                            <th>Contact</th>
+                            <th>Points Balance</th>
+                            <th>Lifetime Points</th>
+                            <th>Tier</th>
+                            <th>Actions</th>
+                        </tr>
+                        </thead>
+
+                        <tbody id="customerTableBody"></tbody>
+
+                    </table>
+
+                </div>
+
+            </div>
+
+        </section>
+
+
+        <!-- ================= EARN ================= -->
+
+        <section id="earn" class="page-section">
+
+            <div class="section-header">
+                <div>
+                    <p class="eyebrow">PURCHASE REWARDS</p>
+                    <h2>Earn Points</h2>
+
+                    <p>
+                        Record a customer purchase and automatically
+                        calculate loyalty rewards.
+                    </p>
+                </div>
+            </div>
+
+
+            <div class="operation-layout">
+
+                <div class="operation-card">
+
+                    <div class="operation-icon">✦</div>
+
+                    <h3>Record Purchase</h3>
+
+                    <p>
+                        Points and tier upgrades are calculated automatically
+                        based on the customer's current membership level.
+                    </p>
+
+                    <form id="earnForm">
+
+                        <div class="field">
+                            <label>Select Customer</label>
+                            <select id="earnCustomer" required></select>
+                        </div>
+
+                        <div class="field">
+                            <label>Purchase Amount (₹)</label>
+                            <input id="purchaseAmount"
+                                   type="number"
+                                   min="1"
+                                   step="0.01"
+                                   placeholder="Enter purchase amount"
+                                   required>
+                        </div>
+
+                        <div class="field">
+                            <label>Reference / Note</label>
+                            <input id="earnNote"
+                                   type="text"
+                                   placeholder="Example: Invoice #1024">
+                        </div>
+
+                        <button class="primary-button full-button"
+                                type="submit">
+                            Calculate & Award Points
+                        </button>
+
+                    </form>
+
+                </div>
+
+
+                <div class="info-card">
+
+                    <p class="eyebrow">HOW IT WORKS</p>
+                    <h3>Automatic reward calculation</h3>
+
+                    <div class="process-step">
+                        <span>01</span>
+                        <div>
+                            <strong>Record purchase</strong>
+                            <p>Enter the customer's purchase amount.</p>
+                        </div>
+                    </div>
+
+                    <div class="process-step">
+                        <span>02</span>
+                        <div>
+                            <strong>Calculate points</strong>
+                            <p>The tier multiplier determines the reward.</p>
+                        </div>
+                    </div>
+
+                    <div class="process-step">
+                        <span>03</span>
+                        <div>
+                            <strong>Upgrade membership</strong>
+                            <p>Lifetime points automatically determine the tier.</p>
+                        </div>
+                    </div>
+
+                </div>
+
+            </div>
+
+        </section>
+
+
+        <!-- ================= REDEEM ================= -->
+
+        <section id="redeem" class="page-section">
+
+            <div class="section-header">
+                <div>
+                    <p class="eyebrow">REWARD REDEMPTION</p>
+                    <h2>Redeem Points</h2>
+
+                    <p>
+                        Redeem available loyalty points while maintaining
+                        balance validation.
+                    </p>
+                </div>
+            </div>
+
+
+            <div class="operation-layout">
+
+                <div class="operation-card">
+
+                    <div class="operation-icon redeem-icon">◇</div>
+
+                    <h3>Redeem Rewards</h3>
+
+                    <p>
+                        The backend prevents customers from redeeming more
+                        than their available points.
+                    </p>
+
+                    <form id="redeemForm">
+
+                        <div class="field">
+                            <label>Select Customer</label>
+                            <select id="redeemCustomer"
+                                    onchange="updateRedeemBalance()"
+                                    required></select>
+                        </div>
+
+                        <div class="balance-preview">
+
+                            <span>Available Balance</span>
+
+                            <strong>
+                                <span id="redeemBalance">0</span> pts
+                            </strong>
+
+                        </div>
+
+                        <div class="field">
+                            <label>Points to Redeem</label>
+                            <input id="redeemPoints"
+                                   type="number"
+                                   min="1"
+                                   placeholder="Enter points"
+                                   required>
+                        </div>
+
+                        <div class="field">
+                            <label>Note</label>
+                            <input id="redeemNote"
+                                   type="text"
+                                   placeholder="Reward description">
+                        </div>
+
+                        <button class="primary-button full-button"
+                                type="submit">
+                            Redeem Points
+                        </button>
+
+                    </form>
+
+                </div>
+
+
+                <div class="info-card">
+
+                    <p class="eyebrow">VALIDATION</p>
+                    <h3>Secure redemption</h3>
+
+                    <p class="info-description">
+                        Redemption validation occurs in the Spring Boot
+                        service layer, not only in the browser.
+                    </p>
+
+                    <div class="security-box">
+                        <span>✓</span>
+                        <p>Available balance validation</p>
+                    </div>
+
+                    <div class="security-box">
+                        <span>✓</span>
+                        <p>Negative balance prevention</p>
+                    </div>
+
+                    <div class="security-box">
+                        <span>✓</span>
+                        <p>Transaction history maintained</p>
+                    </div>
+
+                </div>
+
+            </div>
+
+        </section>
+
+
+        <!-- ================= ADJUST ================= -->
+
+        <section id="adjust" class="page-section">
+
+            <div class="section-header">
+                <div>
+                    <p class="eyebrow">ADMINISTRATION</p>
+                    <h2>Adjust Points</h2>
+
+                    <p>
+                        Manually correct or award loyalty points with
+                        an auditable transaction record.
+                    </p>
+                </div>
+            </div>
+
+
+            <div class="operation-card narrow-card">
+
+                <div class="operation-icon">±</div>
+
+                <h3>Manual Point Adjustment</h3>
+
+                <form id="adjustForm">
+
+                    <div class="field">
+                        <label>Select Customer</label>
+                        <select id="adjustCustomer" required></select>
+                    </div>
+
+                    <div class="field">
+                        <label>Adjustment</label>
+
+                        <input id="adjustPoints"
+                               type="number"
+                               placeholder="Example: 100 or -100"
+                               required>
+
+                        <small>
+                            Use a positive value to add and a negative
+                            value to deduct.
+                        </small>
+                    </div>
+
+                    <div class="field">
+                        <label>Reason</label>
+
+                        <input id="adjustNote"
+                               type="text"
+                               placeholder="Example: Promotional bonus"
+                               required>
+                    </div>
+
+                    <button class="primary-button full-button"
+                            type="submit">
+                        Apply Adjustment
+                    </button>
+
+                </form>
+
+            </div>
+
+        </section>
+
+
+        <!-- ================= TRANSACTIONS ================= -->
+
+        <section id="transactions" class="page-section">
+
+            <div class="section-header">
+
+                <div>
+                    <p class="eyebrow">AUDIT HISTORY</p>
+                    <h2>Transactions</h2>
+
+                    <p>
+                        Review point earnings, redemptions and manual
+                        adjustments.
+                    </p>
+                </div>
+
+            </div>
+
+
+            <div class="panel">
+
+                <div class="transaction-filter">
+
+                    <div class="field inline-field">
+                        <label>Customer</label>
+
+                        <select id="transactionCustomer"
+                                onchange="loadTransactions()">
+                        </select>
+                    </div>
+
+                </div>
+
+
+                <div class="table-wrapper">
+
+                    <table>
+
+                        <thead>
+                        <tr>
+                            <th>Transaction</th>
+                            <th>Customer</th>
+                            <th>Type</th>
+                            <th>Points</th>
+                            <th>Note</th>
+                            <th>Date</th>
+                        </tr>
+                        </thead>
+
+                        <tbody id="transactionTableBody"></tbody>
+
+                    </table>
+
+                </div>
+
+            </div>
+
+        </section>
+
+    </main>
+
+</div>
+
+
+<!-- ================= TOAST ================= -->
+
+<div id="toast" class="toast">
+    <div id="toastIcon" class="toast-icon">✓</div>
+
+    <div>
+        <strong id="toastTitle">Success</strong>
+        <p id="toastMessage">Operation completed successfully.</p>
+    </div>
+</div>
+
+
+<script src="app.js"></script>
+
+</body>
+</html>

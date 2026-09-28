@@ -1,0 +1,9 @@
+package com.project.loyalty.controller;
+import com.project.loyalty.dto.*; import com.project.loyalty.model.*; import com.project.loyalty.service.LoyaltyService; import jakarta.validation.Valid; import org.springframework.http.*; import org.springframework.web.bind.annotation.*; import java.util.*;
+@RestController @RequestMapping("/api") @CrossOrigin(origins="*") public class CustomerController {
+ private final LoyaltyService service; public CustomerController(LoyaltyService s){service=s;}
+ @GetMapping("/customers") public List<Customer> all(){return service.all();} @GetMapping("/customers/{id}") public Customer one(@PathVariable Long id){return service.get(id);}
+ @PostMapping("/customers") public ResponseEntity<Customer> create(@Valid @RequestBody Customer c){return ResponseEntity.status(201).body(service.create(c));}
+ @PutMapping("/customers/{id}") public Customer update(@PathVariable Long id,@Valid @RequestBody Customer c){return service.update(id,c);} @DeleteMapping("/customers/{id}") public ResponseEntity<Void> delete(@PathVariable Long id){service.delete(id);return ResponseEntity.noContent().build();}
+ @PostMapping("/customers/{id}/earn") public Map<String,Object> earn(@PathVariable Long id,@Valid @RequestBody EarnRequest r){return service.earn(id,r);} @PostMapping("/customers/{id}/redeem") public Map<String,Object> redeem(@PathVariable Long id,@Valid @RequestBody PointsRequest r){return service.redeem(id,r);} @PostMapping("/customers/{id}/adjust") public Map<String,Object> adjust(@PathVariable Long id,@Valid @RequestBody AdjustmentRequest r){return service.adjust(id,r);} @GetMapping("/customers/{id}/transactions") public List<PointTransaction> history(@PathVariable Long id){return service.history(id);} @GetMapping("/tiers") public Map<String,Object> tiers(){return service.tiers();}
+}
